@@ -1,0 +1,195 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 10
+      author: dcristev
+      comment: "Create role table"
+      changes:
+        - createSequence:
+            datatType: BIGINT
+            sequenceName: role_id_sequence
+            startValue: 1
+            schemaName: public
+
+        - createTable:
+            columns:
+              - column:
+                  defaultValueSequenceNext: role_id_sequence
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: role_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    unique: true
+                    uniqueConstraintName: unique_role_name_constr
+                    nullable: false
+                  name: role_name
+                  type: VARCHAR(25)
+            tableName: role
+        - sql:
+            sql: alter sequence role_id_sequence owned by role.id
+
+  - changeSet:
+      id: 20
+      author: dcristev
+      comment: "Create user table"
+      changes:
+        - createSequence:
+            datatType: BIGINT
+            sequenceName: user_id_sequence
+            startValue: 1
+            schemaName: public
+
+        - createTable:
+            columns:
+              - column:
+                  defaultValueSequenceNext: user_id_sequence
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: full_name
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                    unique: true
+                  name: username
+                  type: VARCHAR(40)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: VARCHAR(255)
+            tableName: users
+        - sql:
+            sql: alter sequence user_id_sequence owned by users.id
+
+  - changeSet:
+      id: 30
+      author: dcristev
+      comment: "Insert test data in role and user table"
+      changes:
+        - insert:
+            tableName: role
+            schemaName: public
+            columns:
+              - column:
+                  name: role_name
+                  value: "ROLE_STUDENT"
+        - insert:
+            tableName: users
+            schemaName: public
+            columns:
+              - column:
+                  name: full_name
+                  value: "Denis Cristev"
+              - column:
+                  name: username
+                  value: "dcristev@gmail.com"
+              - column:
+                  name: password
+                  value: "$2a$10$NBdqKEYM2M/5AtlfOofqU.AZa7q3TA2/.HoLsxNgCcQLl9xIxNfsi"
+        - insert:
+            tableName: role
+            schemaName: public
+            columns:
+              - column:
+                  name: role_name
+                  value: "ROLE_PROFESSOR"
+        - insert:
+            tableName: users
+            schemaName: public
+            columns:
+              - column:
+                  name: full_name
+                  value: "Moraru Ion"
+              - column:
+                  name: username
+                  value: "moraru@gmail.com"
+              - column:
+                  name: password
+                  value: "$2a$10$NBdqKEYM2M/5AtlfOofqU.AZa7q3TA2/.HoLsxNgCcQLl9xIxNfsi"
+
+  - changeSet:
+      id: 50
+      author: dcristev
+      comment: "Create users_roles table"
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_roles_pkey
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_roles_pkey
+                  name: role_id
+                  type: BIGINT
+            tableName: users_roles
+
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: users_roles
+            constraintName: user_id_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: users_roles
+            constraintName: role_id_fkey
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: role
+            validate: true
+
+        - insert:
+            tableName: users_roles
+            schemaName: public
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: role_id
+                  value: 1
+        - insert:
+            tableName: users_roles
+            schemaName: public
+            columns:
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: role_id
+                  value: 2
+
+        - insert:
+            tableName: users_roles
+            schemaName: public
+            columns:
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: role_id
+                  value: 1
