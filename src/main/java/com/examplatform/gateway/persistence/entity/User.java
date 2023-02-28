@@ -39,7 +39,7 @@ public class User {
 
     @Column(unique = true)
     @NotNull
-    private String username;
+    private String email;
 
     @NotNull
     private String password;

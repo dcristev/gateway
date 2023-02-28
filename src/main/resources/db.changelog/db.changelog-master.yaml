@@ -60,7 +60,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
-                  name: username
+                  name: email
                   type: VARCHAR(40)
               - column:
                   constraints:
@@ -91,7 +91,7 @@ databaseChangeLog:
                   name: full_name
                   value: "Denis Cristev"
               - column:
-                  name: username
+                  name: email
                   value: "dcristev@gmail.com"
               - column:
                   name: password
@@ -111,7 +111,7 @@ databaseChangeLog:
                   name: full_name
                   value: "Moraru Ion"
               - column:
-                  name: username
+                  name: email
                   value: "moraru@gmail.com"
               - column:
                   name: password

@@ -38,7 +38,7 @@ public class UserAuthenticationService {
 
     public JwtResponse loginUser(LoginForm loginForm) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginForm.getEmail(), loginForm.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -49,21 +49,21 @@ public class UserAuthenticationService {
                 .jwt(token)
                 .id(userDetails.getId())
                 .fullName(userDetails.getFullName())
-                .username(userDetails.getUsername())
+                .email(userDetails.getUsername())
                 .userRole(userDetails.getUserRoles())
                 .build();
     }
 
     public JwtResponse registerUser(RegisterForm registerForm) {
-        if (userRepository.existsByUsername(registerForm.getUsername()))
-            throw new UserAlreadyExistsException("User already exists with username " + registerForm.getUsername());
+        if (userRepository.existsByEmail(registerForm.getEmail()))
+            throw new UserAlreadyExistsException("User already exists with username " + registerForm.getEmail());
 
         HashSet<Role> roles = new HashSet<>();
         roles.add(roleRepository.findById(1L).orElseThrow());
 
         User user = User.builder()
                 .fullName(registerForm.getFullName())
-                .username(registerForm.getUsername())
+                .email(registerForm.getEmail())
                 .password(passwordEncoder.encode(registerForm.getPassword()))
                 .role(roles)
                 .build();
@@ -71,7 +71,7 @@ public class UserAuthenticationService {
         userRepository.save(user);
 
         LoginForm loginForm = LoginForm.builder()
-                .username(registerForm.getUsername())
+                .email(registerForm.getEmail())
                 .password(registerForm.getPassword())
                 .build();
 

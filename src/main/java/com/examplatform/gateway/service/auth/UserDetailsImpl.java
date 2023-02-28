@@ -18,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private final Long id;
     private final String fullName;
-    private final String username;
+    private final String email;
     private final String password;
 
     private final Set<Role> userRoles;
@@ -33,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
         return UserDetailsImpl.builder()
                 .id(user.getId())
                 .fullName(user.getFullName())
-                .username(user.getUsername())
+                .email(user.getEmail())
                 .password(user.getPassword())
                 .userRoles(user.getRole())
                 .authorities(authorities)
@@ -52,7 +52,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

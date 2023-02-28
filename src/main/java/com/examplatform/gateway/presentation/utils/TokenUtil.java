@@ -12,10 +12,10 @@ public class TokenUtil {
     private final Long tokenExpiration = 86400L;
     private final String secretKey = "ourVerySecretKey";
 
-    public String generateToken(String username) {
+    public String generateToken(String email) {
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + 1000 * tokenExpiration))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
