@@ -167,41 +167,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.openapitools</groupId>
-				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>5.1.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<typeMappings>
-								<typeMapping>OffsetDateTime=LocalDateTime</typeMapping>
-							</typeMappings>
-							<importMappings>
-								<importMapping>java.time.OffsetDateTime=java.time.LocalDateTime</importMapping>
-							</importMappings>
-							<generatorName>spring</generatorName>
-							<apiPackage>com.examplatform.gateway.presentation.api</apiPackage>
-							<modelPackage>com.examplatform.gateway.persistence.models</modelPackage>
-							<supportingFilesToGenerate>
-								ApiUtil.java
-							</supportingFilesToGenerate>
-							<configOptions>
-								<additionalModelTypeAnnotations>@lombok.Data @lombok.Builder @lombok.NoArgsConstructor
-									@lombok.AllArgsConstructor
-								</additionalModelTypeAnnotations>
-								<sourceFolder>src/main/java/</sourceFolder>
-								<delegatePattern>true</delegatePattern>
-								<interfaceOnly>true</interfaceOnly>
-								<useTags>true</useTags>
-							</configOptions>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>3.2.0</version>
