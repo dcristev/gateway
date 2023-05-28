@@ -26,7 +26,7 @@ public class GatewayConfig {
                         .filters(f -> f.filter(filter))
                         .uri("http://localhost:8082"))
 
-                .route("auth-service", r -> r.path(getenv.get("auth_service"))
+                .route("auth-service", r -> r.path("/exam/**")
                         .filters(f -> f.filter(filter))
                         .uri("http://localhost:8080"))
 
